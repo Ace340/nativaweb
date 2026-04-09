@@ -1,0 +1,74 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+
+const NAV_LINKS = [
+  { label: "Hero", href: "#hero" },
+  { label: "Products", href: "#products" },
+  { label: "Benefits", href: "#benefits" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Artisan", href: "#artisan" },
+];
+
+function useHideOnScroll(threshold = 48) {
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      const current = window.scrollY;
+      const isScrollingDown = current > lastScrollY.current && current > threshold;
+      setHidden((prev) => {
+        if (isScrollingDown && !prev) return true;
+        if (!isScrollingDown && prev) return false;
+        return prev;
+      });
+      lastScrollY.current = current;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [threshold]);
+
+  return hidden;
+}
+
+export function LandingNavbar() {
+  const isHidden = useHideOnScroll();
+
+  return (
+    <nav aria-label="Primary" className="pointer-events-none">
+      <div
+        className={`sticky top-0 z-30 mx-auto flex w-full max-w-6xl items-center justify-between gap-6 rounded-full border border-white/20 bg-slate-950/80 px-6 py-3 text-sm backdrop-blur-2xl transition-transform duration-300 ${
+          isHidden ? "-translate-y-full" : "translate-y-0"
+        } pointer-events-auto shadow-2xl shadow-black/40`}
+      >
+        <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-amber-200">
+          <span className="text-lg font-semibold text-white">Lumen</span>
+          <span className="hidden text-amber-200 sm:inline">Artisan</span>
+        </div>
+
+        <ul className="hidden flex-1 items-center justify-center gap-6 text-slate-200 sm:flex">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="transition-colors duration-200 hover:text-white focus-visible:text-white"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex shrink-0 items-center gap-3">
+          <Button asChild variant="secondary" className="shrink-0 text-xs">
+            <a href="#cta">Shop Amazon</a>
+          </Button>
+        </div>
+      </div>
+    </nav>
+  );
+}
