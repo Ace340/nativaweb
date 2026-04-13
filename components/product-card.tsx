@@ -27,7 +27,7 @@ type ProductCardProps = {
 export function ProductCard({ product, index }: ProductCardProps) {
   return (
     <motion.article
-      className="flex flex-col gap-6 rounded-3xl border border-white/10 bg-slate-900/40 p-6 shadow-2xl shadow-black/40"
+      className="flex flex-col gap-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.55)] p-6 shadow-2xl shadow-black/40"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -43,22 +43,22 @@ export function ProductCard({ product, index }: ProductCardProps) {
           className="object-cover"
           priority={index === 0}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(44,60,20,0.95)] via-[rgba(44,60,20,0.65)]" />
       </div>
 
       <div className="space-y-4">
         <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-300">
           {product.accent}
         </p>
-        <h3 className="text-2xl font-semibold text-white">{product.name}</h3>
-        <p className="text-base leading-relaxed text-slate-300">
+        <h3 className="text-2xl font-semibold text-[var(--text-primary)]">{product.name}</h3>
+        <p className="text-base leading-relaxed text-[var(--text-muted)]">
           {product.description}
         </p>
 
-        <ul className="space-y-3 text-sm text-slate-200">
+        <ul className="space-y-3 text-sm text-[var(--text-primary)]">
           {product.benefits.map((benefit) => (
             <li key={benefit} className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 rounded-full bg-amber-400" />
+              <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-gold)]" />
               <span>{benefit}</span>
             </li>
           ))}

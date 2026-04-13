@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 export function CTASection() {
   return (
     <section id="cta" aria-label="Sticky call to action" className="z-20 px-6 pb-6 lg:px-8">
-      <div className="sticky bottom-4 mx-auto flex max-w-6xl flex-col rounded-3xl border border-white/20 bg-gradient-to-r from-slate-900/90 to-amber-500/20 p-6 shadow-2xl shadow-black/60 backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+      <div className="sticky bottom-4 mx-auto flex max-w-6xl flex-col rounded-3xl border border-[rgba(189,188,178,0.25)] bg-gradient-to-r from-[rgba(44,60,20,0.95)] via-[rgba(44,60,20,0.25)] to-[rgba(216,187,124,0.35)] p-6 shadow-2xl shadow-black/60 backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-2">
-          <p className="text-lg font-semibold text-white">Ready to gift or display?</p>
-          <p className="text-sm text-slate-200">
+          <p className="text-lg font-semibold text-[var(--text-primary)]">Ready to gift or display?</p>
+          <p className="text-sm text-[var(--text-muted)]">
             Tap through to Amazon for each product. Fast fulfillment plus the momentum of a high-converting landing page.
           </p>
         </div>

@@ -23,17 +23,17 @@ export function FAQSection() {
         {faqs.map((faq) => (
           <motion.div
             key={faq.question}
-            className="rounded-3xl border border-white/10 bg-slate-900/50 p-6"
+            className="rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.6)] p-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <details className="space-y-2">
-              <summary className="cursor-pointer text-base font-semibold text-white">
+              <summary className="cursor-pointer text-base font-semibold text-[var(--text-primary)]">
                 {faq.question}
               </summary>
-              <p className="text-sm text-slate-300">{faq.answer}</p>
+              <p className="text-sm text-[var(--text-muted)]">{faq.answer}</p>
             </details>
           </motion.div>
         ))}

@@ -23,10 +23,10 @@ export function BenefitsSection() {
         {benefits.map((benefit) => (
           <div
             key={benefit.title}
-            className="space-y-3 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/40"
+            className="space-y-3 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(216,187,124,0.08)] p-6 shadow-lg shadow-black/40"
           >
-            <p className="text-sm uppercase tracking-[0.4em] text-amber-300">{benefit.title}</p>
-            <p className="text-base text-slate-200">{benefit.description}</p>
+            <p className="text-sm uppercase tracking-[0.4em] text-[var(--color-gold)]">{benefit.title}</p>
+            <p className="text-base text-[var(--text-muted)]">{benefit.description}</p>
           </div>
         ))}
       </div>

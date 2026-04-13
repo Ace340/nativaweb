@@ -23,15 +23,15 @@ export function TestimonialsSection() {
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.name}
-            className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-white/10 bg-slate-900/60 p-6"
+            className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)] p-6"
           >
-            <p className="text-base leading-relaxed text-slate-200">“{testimonial.quote}”</p>
-            <div className="flex items-center justify-between text-sm text-slate-400">
+            <p className="text-base leading-relaxed text-[var(--text-muted)]">“{testimonial.quote}”</p>
+            <div className="flex items-center justify-between text-sm text-[rgba(189,188,178,0.65)]">
               <div>
-                <p className="text-sm font-semibold text-white">{testimonial.name}</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{testimonial.name}</p>
                 <p>{testimonial.role}</p>
               </div>
-              <div className="text-amber-300">{testimonial.rating}</div>
+              <div className="text-[var(--color-gold)]">{testimonial.rating}</div>
             </div>
           </div>
         ))}

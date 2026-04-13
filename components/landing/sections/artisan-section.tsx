@@ -21,13 +21,13 @@ export function ArtisanSection() {
         title="A Brooklyn atelier with a cinematic eye"
         description="We pair CNC precision with hand-polished warmth so these pieces look exceptional without compromising performance."
       />
-      <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-6 rounded-3xl border border-white/10 bg-slate-900/60 p-8">
-          <p className="text-base text-slate-200">{artisan.description}</p>
-          <ul className="space-y-3 text-sm text-slate-300">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)] p-8">
+            <p className="text-base text-[var(--text-muted)]">{artisan.description}</p>
+            <ul className="space-y-3 text-sm text-[var(--text-primary)]">
             {artisan.details.map((detail) => (
               <li key={detail} className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-amber-400" />
+                <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-gold)]" />
                 <span>{detail}</span>
               </li>
             ))}

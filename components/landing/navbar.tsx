@@ -41,21 +41,21 @@ export function LandingNavbar() {
   return (
     <nav aria-label="Primary" className="pointer-events-none">
       <div
-        className={`sticky top-0 z-30 mx-auto flex w-full max-w-6xl items-center justify-between gap-6 rounded-full border border-white/20 bg-slate-950/80 px-6 py-3 text-sm backdrop-blur-2xl transition-transform duration-300 ${
+        className={`sticky top-0 z-30 mx-auto flex w-full max-w-6xl items-center justify-between gap-6 rounded-full border border-[rgba(189,188,178,0.35)] bg-[rgba(44,60,20,0.9)] px-6 py-3 text-sm backdrop-blur-2xl transition-transform duration-300 ${
           isHidden ? "-translate-y-full" : "translate-y-0"
         } pointer-events-auto shadow-2xl shadow-black/40`}
       >
-        <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-amber-200">
-          <span className="text-lg font-semibold text-white">Lumen</span>
-          <span className="hidden text-amber-200 sm:inline">Artisan</span>
+        <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-[var(--color-gold)]">
+          <span className="text-lg font-semibold text-[var(--text-primary)]">Nativa</span>
+          <span className="hidden text-[var(--color-gold)] sm:inline">Handbags</span>
         </div>
 
-        <ul className="hidden flex-1 items-center justify-center gap-6 text-slate-200 sm:flex">
+        <ul className="hidden flex-1 items-center justify-center gap-6 text-[var(--text-muted)] sm:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="transition-colors duration-200 hover:text-white focus-visible:text-white"
+                className="transition-colors duration-200 hover:text-[var(--text-primary)] focus-visible:text-[var(--text-primary)]"
               >
                 {link.label}
               </a>

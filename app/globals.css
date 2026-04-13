@@ -1,9 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --page-bg: #020617;
-  --text-primary: #f8fafc;
-  --text-muted: #94a3b8;
+  --color-forest: #2c3c14;
+  --color-wood: #634727;
+  --color-gold: #d8bb7c;
+  --color-pale: #bdbcb2;
+  --color-muted: #a69880;
+  --page-bg: var(--color-forest);
+  --text-primary: var(--color-pale);
+  --text-muted: var(--color-muted);
 }
 
 @layer base {
@@ -20,7 +25,7 @@
   }
 
   ::selection {
-    background: #fcd34d;
-    color: #0f172a;
+    background: var(--color-gold);
+    color: var(--color-forest);
   }
 }
