@@ -2,18 +2,18 @@ import type { Product } from "@/components/product-card";
 
 export const products: Product[] = [
   {
-    id: "solis-lamp",
-    name: "Solis Horizon Lamp",
+    id: "ambar-bag",
+    name: "Ambar Handbag",
     description:
-      "Studio-grade borosilicate dome diffuses a warm amber glow while a solid brass pivot locks in your perfect light angle.",
+      "Crafted in Colombia with traditional techniques, this unique handbag features natural fique fiber and plant-based mustard dyes.",
     benefits: [
-      "Precision-etched lens for even, glare-free illumination.",
-      "Magnetic diffuser and USB-C charging for daily polishing rituals.",
-      "Amazon Prime ready packaging for 48-hour delivery.",
+      "Handwoven by skilled artisans in Colombia.",
+      "Sustainable materials and eco-friendly dyeing process.",
+      "Unique pattern created through traditional weaving methods.",
     ],
     image:
-      "https://images.unsplash.com/photo-1470229538611-16ba8c7ffbd7?auto=format&fit=crop&w=1200&q=80",
-    accent: "Signature light",
+      "/ambar-front.jpg",
+    accent: "Golden style",
     amazonUrl: "https://www.amazon.com/dp/B08XJG8MQM",
   },
   {

@@ -6,9 +6,9 @@ export function ProductsSection() {
   return (
     <section id="products" className="space-y-10">
       <SectionHeading
-        label="Product Showcase"
-        title="Two polished essentials, zero checkout headaches"
-        description="Each card includes product imagery, thoughtful descriptions, key benefits, and a direct Buy on Amazon CTA built for conversions."
+        label="Meet our products"
+        title="Handcrafted by colombian artisans with a passion for quality and sustainability"
+        description="Each bag is meticulously handwoven in Colombia using traditional techniques, creating a unique pattern with natural fique fiber and plant-based mustard dyes."
       />
       <div className="grid gap-8 md:grid-cols-2">
         {products.map((product, index) => (
