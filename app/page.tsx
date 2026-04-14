@@ -3,6 +3,7 @@
 import { LandingNavbar } from "@/components/landing/navbar";
 import { HeroSection } from "@/components/landing/sections/hero-section";
 import { ProductsSection } from "@/components/landing/sections/products-section";
+import { BentoGallerySection } from "@/components/landing/sections/bento-gallery-section";
 import { BenefitsSection } from "@/components/landing/sections/benefits-section";
 import { TestimonialsSection } from "@/components/landing/sections/testimonials-section";
 import { FAQSection } from "@/components/landing/sections/faq-section";
@@ -17,6 +18,7 @@ export default function Home() {
       <main className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-24 px-6 py-10 pb-40 lg:px-8">
         <HeroSection />
         <ProductsSection />
+        <BentoGallerySection />
         <BenefitsSection />
         <TestimonialsSection />
         <FAQSection />
