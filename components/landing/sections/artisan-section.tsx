@@ -17,8 +17,8 @@ export function ArtisanSection() {
       variants={sectionVariant}
     >
       <SectionHeading
-        label="Artisan"
-        title="A Brooklyn atelier with a cinematic eye"
+        label="Artisans"
+        title="A colombian tradition of hand-finished quality"
         description="We pair CNC precision with hand-polished warmth so these pieces look exceptional without compromising performance."
       />
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">

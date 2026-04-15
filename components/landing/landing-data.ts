@@ -103,7 +103,7 @@ export const artisan = {
     "Finish is sealed with plant-based oils and packaged with recyclable linen sleeve.",
   ],
   image:
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    "/artisan.jpg",
 };
 
 export const heroStats = [
