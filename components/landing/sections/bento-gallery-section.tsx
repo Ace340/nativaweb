@@ -14,26 +14,30 @@ const galleryItems = [
     alt: "Featured gallery artwork",
     title: "Open with gallery four",
     description: "The featured frame introduces the collection with a calm, text-led reveal.",
-    className: "md:col-span-2 md:row-span-2",
+    className: "md:col-span-4 md:row-span-2 lg:col-span-6",
+    sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 66vw, 50vw",
     featured: true,
   },
   {
     src: "/gallery1.jpg",
     alt: "Gallery one detail",
     title: "Texture study",
-    className: "md:row-span-1",
+    className: "md:col-span-2 lg:col-span-3",
+    sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery2.jpg",
     alt: "Gallery two detail",
     title: "Warm composition",
-    className: "md:row-span-1",
+    className: "md:col-span-2 lg:col-span-3",
+    sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery3.jpg",
     alt: "Gallery three detail",
     title: "Layered depth",
-    className: "md:col-span-2",
+    className: "md:col-span-6 lg:col-span-12",
+    sizes: "(max-width: 767px) 100vw, 100vw",
   },
 ] as const;
 
@@ -77,18 +81,18 @@ export function BentoGallerySection() {
         description="Scroll through a cinematic mosaic where the featured tile introduces the story first, then the rest of the collection follows with a soft GSAP reveal."
       />
 
-      <div className="grid auto-rows-[minmax(180px,1fr)] gap-4 md:grid-cols-4 md:grid-rows-3">
+      <div className="grid auto-rows-[minmax(14rem,auto)] gap-4 md:grid-cols-6 md:auto-rows-[16rem] lg:grid-cols-12 lg:auto-rows-[18rem]">
         {galleryItems.map((item) => (
           <article
             key={item.src}
             data-gallery-card
-            className={`group relative overflow-hidden rounded-[2rem] border border-white/10 bg-[rgba(18,24,14,0.8)] shadow-2xl shadow-black/40 ${item.className}`}
+            className={`group relative min-h-[14rem] overflow-hidden rounded-[2rem] border border-white/10 bg-[rgba(18,24,14,0.8)] shadow-2xl shadow-black/40 md:min-h-[16rem] lg:min-h-[18rem] ${item.className}`}
           >
             <Image
               src={item.src}
               alt={item.alt}
               fill
-              sizes="(max-width: 768px) 100vw, 25vw"
+              sizes={item.sizes}
               className="object-cover transition duration-700 group-hover:scale-105"
               onLoadingComplete={() => ScrollTrigger.refresh()}
             />

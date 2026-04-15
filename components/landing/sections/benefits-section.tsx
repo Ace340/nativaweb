@@ -16,7 +16,7 @@ export function BenefitsSection() {
     >
       <SectionHeading
         label="Benefits"
-        title="Why this landing page converts"
+        title="Why choosing Nativa means sustainability"
         description="Clear hierarchy, trust signals, and tactile storytelling keep visitors engaged and drive Amazon clicks."
       />
       <div className="grid gap-6 md:grid-cols-3">

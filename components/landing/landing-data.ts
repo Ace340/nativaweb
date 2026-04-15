@@ -17,37 +17,37 @@ export const products: Product[] = [
     amazonUrl: "https://www.amazon.com/dp/B08XJG8MQM",
   },
   {
-    id: "ember-diffuser",
-    name: "Ember Ritual Diffuser",
+    id: "frida-bag",
+    name: "Frida Handbag",
     description:
-      "Ceramic capsule with activated charcoal core, slow-release amber oil, and gentle glow ring keyed to Solis for layered ambiance.",
+      "Ceramic capsule with activated charcoal core, slow-release amber oil, and gentle glow ring keyed to Solis for layered ambiance.Features a stunning fuchsia pink color achieved through plant-based dyes, showcasing the distinctive woven texture and organic beauty of natural iraca palm material.",
     benefits: [
-      "Charcoal lattice removes impurities while scent blooms.",
-      "Syncing glow ring mirrors the lamp’s warmth for cohesive styling.",
-      "Refill-ready cartridges ship via Amazon Subscribe & Save.",
+      "Soft cotton fabric interior lining for refined elegance.",
+      "Spacious handbag with relaxed silhouette and lightweight construction.",
+      "Stunning fuchsia pink color achieved through plant-based dyes, organic beauty of natural iraca palm material.",
     ],
     image:
-      "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1200&q=80",
-    accent: "Scent ritual",
+      "/MainC.jpg",
+    accent: "Pink passion",
     amazonUrl: "https://www.amazon.com/dp/B0897V9HS2",
   },
 ];
 
 export const benefits = [
   {
-    title: "Narrative-first storytelling",
+    title: "Fique Fiber",
     description:
-      "Hero copy, sectional pacing, and product highlights were calibrated for a single goal: convert curious visitors into Amazon traffic.",
+      "Natural plant fiber extracted from the leaves of the Furcraea plant, traditionally cultivated in Colombia and other Andean regions.",
   },
   {
-    title: "Performance–ready visuals",
+    title: "Artisanal Craftmanship",
     description:
-      "Framer Motion micro-interactions and clean Tailwind layouts keep the experience smooth on both desktop and mobile viewports.",
+      "Fique production also has an important social and economic role, as tens of thousands of rural families depend on its cultivation and processing",
   },
   {
-    title: "Artisan authenticity",
+    title: "Tagua Nut",
     description:
-      "Hand-polished finishes, sustainable brass, and curated fragrances give this ecommerce landing page depth without a checkout system.",
+      "Tagua is a hard, white, organic material that comes from the seeds of certain palm trees. It's valued for its durability, eco friendly, and natural beauty.",
   },
 ];
 
