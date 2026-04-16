@@ -11,33 +11,40 @@ gsap.registerPlugin(ScrollTrigger);
 const galleryItems = [
   {
     src: "/gallery4.png",
-    alt: "Featured gallery artwork",
-    title: "Open with gallery four",
-    description: "The featured frame introduces the collection with a calm, text-led reveal.",
+    alt: "fique Fiber",
+    title: "Fique Fiber",
+    description: "When extracted, the fiber is washed and dried naturally.",
     className: "md:col-span-4 md:row-span-2 lg:col-span-6",
     sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 66vw, 50vw",
     featured: true,
   },
   {
     src: "/gallery1.jpg",
-    alt: "Gallery one detail",
-    title: "Texture study",
+    alt: "ambar bag model",
+    title: "Ambar Handbag",
     className: "md:col-span-2 lg:col-span-3",
     sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery2.jpg",
-    alt: "Gallery two detail",
-    title: "Warm composition",
+    alt: "Ambar bag detail",
+    title: "Fit every style",
     className: "md:col-span-2 lg:col-span-3",
     sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery3.jpg",
-    alt: "Gallery three detail",
-    title: "Layered depth",
+    alt: "Ambar bag detail",
+    title: "Light and durable",
     className: "md:col-span-6 lg:col-span-12",
     sizes: "(max-width: 767px) 100vw, 100vw",
+  },
+  {
+    src: "/gallery5.svg",
+    alt: "Frida bag detail",
+    title: "Outstanding colors",
+    className: "hidden lg:block lg:col-span-6",
+    sizes: "50vw",
   },
 ] as const;
 
@@ -77,11 +84,11 @@ export function BentoGallerySection() {
     <section ref={sectionRef} id="gallery" className="space-y-10">
       <SectionHeading
         label="Gallery"
-        title="A scrubbed bento gallery that opens with gallery four"
-        description="Scroll through a cinematic mosaic where the featured tile introduces the story first, then the rest of the collection follows with a soft GSAP reveal."
+        title="A style that matches your inner vibe"
+        description="Nativa products are the perfect fit for your lifestyle, whether you're heading to the office, exploring the city, or enjoying a weekend getaway. Our bags are designed to complement your unique style and keep up with your dynamic life."
       />
 
-      <div className="grid auto-rows-[minmax(14rem,auto)] gap-4 md:grid-cols-6 md:auto-rows-[16rem] lg:grid-cols-12 lg:auto-rows-[18rem]">
+      <div className="grid auto-rows-[minmax(14rem,auto)] gap-4 md:grid-cols-6 md:auto-rows-[16rem] lg:grid-cols-12 lg:auto-rows-[18rem] lg:grid-flow-dense">
         {galleryItems.map((item) => (
           <article
             key={item.src}
