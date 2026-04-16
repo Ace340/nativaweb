@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const NAV_LINKS = [
-  { label: "Hero", href: "#hero" },
+  { label: "Gallery/", href: "#gallery" },
   { label: "Products", href: "#products" },
   { label: "Benefits", href: "#benefits" },
   { label: "Testimonials", href: "#testimonials" },
