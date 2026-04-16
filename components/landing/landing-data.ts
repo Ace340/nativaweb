@@ -20,7 +20,7 @@ export const products: Product[] = [
     id: "frida-bag",
     name: "Frida Handbag",
     description:
-      "Ceramic capsule with activated charcoal core, slow-release amber oil, and gentle glow ring keyed to Solis for layered ambiance.Features a stunning fuchsia pink color achieved through plant-based dyes, showcasing the distinctive woven texture and organic beauty of natural iraca palm material.",
+      "Features a stunning fuchsia pink color achieved through plant-based dyes, showcasing the distinctive woven texture and organic beauty of natural iraca palm material.",
     benefits: [
       "Soft cotton fabric interior lining for refined elegance.",
       "Spacious handbag with relaxed silhouette and lightweight construction.",
@@ -54,22 +54,22 @@ export const benefits = [
 export const testimonials = [
   {
     quote:
-      "The Solis Horizon Lamp is now the centerpiece of my studio. The glow is pure without any harsh edges and shipping from Amazon felt effortless.",
-    name: "Marina L.",
+      "Great handbag, spacious, stylish and well-made. It fits all my personal belongs and it's easy to carry. I will definetely recommend it.",
+    name: "Silvia D.",
     role: "Creative Director, Atelier Mereo",
     rating: "4.9 / 5",
   },
   {
     quote:
-      "Pairing the lamp with Ember Diffuser made our showrooms feel curated. Clients appreciate the linked Amazon links—no extra checkout fuss.",
-    name: "Ibrahim A.",
+      "I've been looking for a handbag like this for years. The quality is exceptional and the design is unique.",
+    name: "Veronica R.",
     role: "Founder, Lumen+Co",
     rating: "4.8 / 5",
   },
   {
     quote:
-      "As a product designer, I admire how the page highlights just two pieces. It feels intentional and the CTA nudges to Amazon without clutter.",
-    name: "Cory V.",
+      "The details are impeccable. It's clear that a lot of thought and care went into the design.",
+    name: "Jenny A.",
     role: "Lead Industrial Designer",
     rating: "5.0 / 5",
   },
@@ -96,11 +96,11 @@ export const faqs = [
 export const artisan = {
   title: "Hand-finished modernity",
   description:
-    "Every component is cut, polished, and assembled in our Brooklyn atelier. The process blends CNC precision with hand-brushed warmth so it looks cinematic in any home.",
+    "Fique production also has an important social and economic role, as tens of thousands of rural families depend on its cultivation and processing. From extracting the fiber to spinning, dyeing, and weaving, every step is done by hand. There are no machines to speed up or standardize the process. This slow, intentional rhythm creates pieces with character, marked by subtle variations that are the artisan’s signature.",
   details: [
-    "Laser-etched brass pivots for fluid motion control.",
-    "Charcoal cores sourced from reclaimed wood matter a deeper scent profile.",
-    "Finish is sealed with plant-based oils and packaged with recyclable linen sleeve.",
+    "Fique is a naturally strong leaf fiber, making handbags highly resistant to wear, tension, and everyday use.",
+    "Fique offers an eco-conscious alternative to synthetic fabrics with a much lower environmental impact.",
+    "Its rich organic texture gives each handbag a handcrafted, premium look that highlights heritage and authenticity.",
   ],
   image:
     "/artisan.jpg",

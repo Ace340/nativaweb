@@ -19,7 +19,7 @@ export function ArtisanSection() {
       <SectionHeading
         label="Artisans"
         title="A colombian tradition of hand-finished quality"
-        description="We pair CNC precision with hand-polished warmth so these pieces look exceptional without compromising performance."
+        description="For generations, Colombian artisans have shaped natural fibers into pieces that tell the story of a continent."
       />
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)] p-8">
