@@ -77,19 +77,19 @@ export const testimonials = [
 
 export const faqs = [
   {
-    question: "Is a checkout system included?",
+    question: "Is this handbag really handmade?",
     answer:
-      "No. Every product card redirects visitors straight to Amazon. That keeps the experience simple and leverages Amazon’s fulfillment.",
+      "Yes. the bags are handwoven by artisans using traditional techniques, which means each piece is unique and may have slight variations in pattern or texture.",
   },
   {
-    question: "Do you ship internationally?",
+    question: "Is this bag durable enough for everyday use?",
     answer:
-      "Amazon handles all shipping logistics, so regional availability depends on each listing. Most buyers see Prime and two-day options.",
+      "Yes, these bags are designed to be both functional and long-lasting, but they’re best suited for light to moderate daily use (like casual outings, beach trips, or summer wear) rather than heavy loads.",
   },
   {
-    question: "How do I keep the ritual fresh?",
+    question: "How do I clean and care for the bag?",
     answer:
-      "Refill packs for the Ember Diffuser are listed alongside the main listing, and we highlight them in the Amazon store for easy reorders.",
+      "It’s recommended to spot clean with a soft cloth and avoid soaking it in water or exposing it to harsh chemicals or prolonged sunlight to preserve the natural fibers.",
   },
 ];
 

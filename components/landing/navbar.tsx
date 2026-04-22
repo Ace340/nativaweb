@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const NAV_LINKS = [
-  { label: "Gallery/", href: "#gallery" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Products", href: "#products" },
   { label: "Benefits", href: "#benefits" },
   { label: "Testimonials", href: "#testimonials" },
@@ -45,10 +45,17 @@ export function LandingNavbar() {
           isHidden ? "-translate-y-full" : "translate-y-0"
         } pointer-events-auto shadow-2xl shadow-black/40`}
       >
-        <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-[var(--color-gold)]">
-          <span className="text-lg font-semibold text-[var(--text-primary)]">Nativa</span>
-          <span className="hidden text-[var(--color-gold)] sm:inline">Handbags</span>
-        </div>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="shrink-0 cursor-pointer"
+          aria-label="Scroll to top"
+        >
+          <img
+            src="/logo.svg"
+            alt="Nativa Handbags Logo"
+            className="h-12 w-auto sm:h-14 transition-transform hover:scale-105"
+          />
+        </button>
 
         <ul className="hidden flex-1 items-center justify-center gap-6 text-[var(--text-muted)] sm:flex">
           {NAV_LINKS.map((link) => (
