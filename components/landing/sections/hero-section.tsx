@@ -23,7 +23,7 @@ export function HeroSection() {
 
         <div className="absolute right-6 bottom-6 flex flex-wrap justify-end gap-4 md:right-8">
           <Button asChild variant="primary">
-            <a href="#products">Explore the duo</a>
+            <a href="#products">Explore NTV</a>
           </Button>
           <Button asChild variant="ghost">
             <a href="#artisan">Meet the artisan</a>
