@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { benefits } from "@/components/landing/landing-data";

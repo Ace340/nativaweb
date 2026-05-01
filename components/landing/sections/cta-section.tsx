@@ -12,7 +12,7 @@ export function CTASection() {
         </div>
         <div className="mt-4 flex flex-wrap gap-3 lg:mt-0">
           <Button asChild variant="primary" className="w-full lg:w-auto">
-            <a href="https://www.amazon.com" target="_blank" rel="noreferrer">
+            <a href="https://www.amazon.com/s?rh=n%3A7141123011%2Cp_4%3ANTV&ref=bl_sl_s_sh_web_7141123011" target="_blank" rel="noreferrer">
               Shop on Amazon
             </a>
           </Button>
