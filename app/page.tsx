@@ -4,6 +4,7 @@ import { ProductsSection } from "@/components/landing/sections/products-section"
 import { BentoGallerySection } from "@/components/landing/sections/bento-gallery-section";
 import { BenefitsSection } from "@/components/landing/sections/benefits-section";
 import { TestimonialsSection } from "@/components/landing/sections/testimonials-section";
+import { SocialMediaSection } from "@/components/landing/sections/social-media-section";
 import { FAQSection } from "@/components/landing/sections/faq-section";
 import { ArtisanSection } from "@/components/landing/sections/artisan-section";
 import { CTASection } from "@/components/landing/sections/cta-section";
@@ -19,6 +20,7 @@ export default function Home() {
         <BentoGallerySection />
         <BenefitsSection />
         <TestimonialsSection />
+        <SocialMediaSection />
         <FAQSection />
         <ArtisanSection />
       </main>
