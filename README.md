@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nativaweb
+
+> Modern landing page for a premium artisan brand, featuring a bento gallery, testimonials, and smooth scroll animations.
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js) ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss)
+
+## Overview
+
+A high-end landing page built for a premium artisan product brand. Features a modular section-based architecture with a bento-style gallery, product showcase, testimonials, FAQ, and CTA — all tied together with GSAP and Framer Motion animations.
+
+## Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **UI:** React 19, Tailwind CSS 4, Radix UI
+- **Animations:** Framer Motion, GSAP
+- **Icons:** Lucide React
+- **Language:** TypeScript
+
+## Features
+
+- 🎨 **Premium Landing Page** — Modular section-based layout with elegant design
+- 🖼️ **Bento Gallery** — Modern bento-grid image showcase
+- ⭐ **Testimonials & FAQ** — Interactive sections with smooth animations
+- 📱 **Fully Responsive** — Optimized for all screen sizes
+- ⚡ **Performance First** — Next.js 15 with optimized loading and rendering
+- 🎯 **CTA Section** — Conversion-optimized call-to-action
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/Ace340/nativaweb.git
+cd nativaweb
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+nativaweb/
+├── app/
+│   └── page.tsx                    # Main page composing all sections
+├── components/landing/
+│   ├── navbar.tsx                  # Navigation
+│   └── sections/
+│       ├── hero-section.tsx        # Hero banner
+│       ├── products-section.tsx    # Product showcase
+│       ├── bento-gallery-section.tsx # Bento grid gallery
+│       ├── benefits-section.tsx    # Benefits/features
+│       ├── testimonials-section.tsx # Social proof
+│       ├── social-media-section.tsx # Social links
+│       ├── faq-section.tsx         # FAQ accordion
+│       ├── artisan-section.tsx     # Artisan story
+│       └── cta-section.tsx         # Call to action
+└── package.json
+```
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
