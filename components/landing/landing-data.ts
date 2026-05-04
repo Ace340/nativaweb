@@ -119,6 +119,7 @@ export const instagramPosts = [
     caption: "New arrival! Our Ambar handbag features natural fique fiber with stunning golden tones. Handwoven with love in Colombia. ✨",
     likes: 1247,
     date: "2 days ago",
+    permalink: "https://www.instagram.com/p/example1/",
   },
   {
     id: "insta-2",
@@ -126,6 +127,7 @@ export const instagramPosts = [
     caption: "Behind the scenes: Watch our artisans craft each piece using traditional techniques passed down through generations. 🌿",
     likes: 892,
     date: "5 days ago",
+    permalink: "https://www.instagram.com/p/example2/",
   },
   {
     id: "insta-3",
@@ -133,5 +135,6 @@ export const instagramPosts = [
     caption: "The Frida collection in all its glory. Plant-based dyes create these beautiful, sustainable colors. 💚",
     likes: 1567,
     date: "1 week ago",
+    permalink: "https://www.instagram.com/p/example3/",
   },
 ];
