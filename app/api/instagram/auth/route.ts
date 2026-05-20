@@ -5,19 +5,25 @@
 
 import { NextResponse } from "next/server";
 import { buildAuthUrl } from "@/lib/instagram-api";
+import { createLogger } from "@/lib/logger";
+import { handleApiError } from "@/lib/error-handler";
 
+const logger = createLogger("instagram-auth-api");
+
+/**
+ * GET /api/instagram/auth
+ * Initiates the OAuth flow by redirecting to Instagram
+ */
 export async function GET() {
   try {
-    // Build the Instagram authorization URL
+    logger.info("Initiating Instagram OAuth flow");
     const authUrl = buildAuthUrl();
 
     // Redirect user to Instagram for authorization
     return NextResponse.redirect(authUrl);
   } catch (error) {
-    console.error("Instagram OAuth error:", error);
-    return NextResponse.json(
-      { error: "Failed to initiate Instagram OAuth flow" },
-      { status: 500 }
-    );
+    const errorResponse = handleApiError(error, "Initiate Instagram OAuth");
+    logger.error("Failed to initiate OAuth", error);
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

@@ -40,21 +40,6 @@ export interface InstagramMediaResponse {
 }
 
 /**
- * Instagram API response for media details
- */
-export interface InstagramMediaDetails {
-  id: string;
-  media_type: InstagramMediaType;
-  media_url: string;
-  permalink: string;
-  caption: string | null;
-  timestamp: string;
-  like_count?: number;
-  comments_count?: number;
-  thumbnail_url?: string | null;
-}
-
-/**
  * Instagram user info
  */
 export interface InstagramUser {

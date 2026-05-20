@@ -6,144 +6,119 @@
 import type {
   InstagramMedia,
   InstagramMediaResponse,
-  InstagramMediaDetails,
   InstagramUser,
   AccessTokenResponse,
-  InstagramApiError,
 } from "@/types/instagram";
+import { config } from "./config";
+import { handleInstagramError, validateApiResponse } from "./error-handler";
+import { createLogger } from "./logger";
+import { getRelativeTime } from "./utils";
 
-const API_VERSION = "v25.0";
-const BASE_URL = "https://graph.instagram.com";
-
-/**
- * Environment variables required for Instagram API
- */
-function getInstagramConfig() {
-  const appId = process.env.INSTAGRAM_APP_ID;
-  const appSecret = process.env.INSTAGRAM_APP_SECRET;
-  const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
-  const userId = process.env.INSTAGRAM_USER_ID;
-
-  if (!appId || !appSecret || !accessToken || !userId) {
-    throw new Error("Missing required Instagram API environment variables");
-  }
-
-  return { appId, appSecret, accessToken, userId };
-}
+const logger = createLogger("instagram-api");
 
 /**
  * Build OAuth authorization URL
  */
 export function buildAuthUrl(): string {
-  const { appId } = getInstagramConfig();
-  const redirectUri = process.env.INSTAGRAM_REDIRECT_URI || "http://localhost:3000/api/instagram/callback";
+  validateConfig();
 
   const params = new URLSearchParams({
-    client_id: appId,
-    redirect_uri: redirectUri,
+    client_id: config.instagram.appId!,
+    redirect_uri: config.instagram.redirectUri,
     response_type: "code",
-    scope: "user_profile,user_media", // Permissions needed for reading posts
+    scope: "user_profile,user_media",
   });
 
-  return `https://api.instagram.com/oauth/authorize?${params.toString()}`;
+  return `${config.instagram.oauthUrl}/authorize?${params.toString()}`;
 }
 
 /**
  * Exchange authorization code for short-lived access token
  */
 export async function exchangeCodeForToken(code: string): Promise<AccessTokenResponse> {
-  const { appId, appSecret } = getInstagramConfig();
-  const redirectUri = process.env.INSTAGRAM_REDIRECT_URI || "http://localhost:3000/api/instagram/callback";
+  validateConfig();
 
-  const response = await fetch("https://api.instagram.com/oauth/access_token", {
+  const response = await fetch(`${config.instagram.oauthUrl}/access_token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      client_id: appId,
-      client_secret: appSecret,
+      client_id: config.instagram.appId!,
+      client_secret: config.instagram.appSecret!,
       grant_type: "authorization_code",
-      redirect_uri: redirectUri,
+      redirect_uri: config.instagram.redirectUri,
       code,
     }),
   });
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    return await validateApiResponse<AccessTokenResponse>(response, "Exchange code for token");
+  } catch (error) {
+    throw handleInstagramError(error, "Exchange code for token");
   }
-
-  const data = await response.json();
-  return data;
 }
 
 /**
  * Exchange short-lived token for long-lived token (valid for 60 days)
  */
 export async function getLongLivedToken(shortLivedToken: string): Promise<AccessTokenResponse> {
-  const { appSecret } = getInstagramConfig();
+  validateConfig();
 
-  const response = await fetch(
-    `${BASE_URL}/access_token?grant_type=ig_exchange_token&client_secret=${appSecret}&access_token=${shortLivedToken}`
-  );
+  const url = new URL(`${config.instagram.baseUrl}/access_token`);
+  url.searchParams.append("grant_type", "ig_exchange_token");
+  url.searchParams.append("client_secret", config.instagram.appSecret!);
+  url.searchParams.append("access_token", shortLivedToken);
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    return await validateApiResponse<AccessTokenResponse>(await fetch(url.toString()), "Get long-lived token");
+  } catch (error) {
+    throw handleInstagramError(error, "Get long-lived token");
   }
-
-  const data = await response.json();
-  return data;
 }
 
 /**
  * Refresh long-lived access token
  */
 export async function refreshAccessToken(accessToken: string): Promise<AccessTokenResponse> {
-  const response = await fetch(
-    `${BASE_URL}/refresh_access_token?grant_type=ig_refresh_token&access_token=${accessToken}`
-  );
+  const url = new URL(`${config.instagram.baseUrl}/refresh_access_token`);
+  url.searchParams.append("grant_type", "ig_refresh_token");
+  url.searchParams.append("access_token", accessToken);
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    return await validateApiResponse<AccessTokenResponse>(await fetch(url.toString()), "Refresh access token");
+  } catch (error) {
+    throw handleInstagramError(error, "Refresh access token");
   }
-
-  const data = await response.json();
-  return data;
 }
 
 /**
  * Get Instagram user info
  */
 export async function getUserInfo(accessToken: string): Promise<InstagramUser> {
-  const response = await fetch(
-    `${BASE_URL}/me?fields=id,username,account_type&access_token=${accessToken}`
-  );
+  const url = new URL(`${config.instagram.baseUrl}/me`);
+  url.searchParams.append("fields", "id,username,account_type");
+  url.searchParams.append("access_token", accessToken);
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    return await validateApiResponse<InstagramUser>(await fetch(url.toString()), "Get user info");
+  } catch (error) {
+    throw handleInstagramError(error, "Get user info");
   }
-
-  const data = await response.json();
-  return data;
 }
 
 /**
  * Get list of media IDs for a user
  */
 export async function getUserMediaIds(userId: string, accessToken: string): Promise<string[]> {
-  const response = await fetch(
-    `${BASE_URL}/${userId}/media?access_token=${accessToken}&limit=25`
-  );
+  const url = new URL(`${config.instagram.baseUrl}/${userId}/media`);
+  url.searchParams.append("access_token", accessToken);
+  url.searchParams.append("limit", "25");
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    const data = await validateApiResponse<InstagramMediaResponse>(await fetch(url.toString()), "Get media IDs");
+    return data.data.map((item) => item.id);
+  } catch (error) {
+    throw handleInstagramError(error, "Get media IDs");
   }
-
-  const data: InstagramMediaResponse = await response.json();
-  return data.data.map((item) => item.id);
 }
 
 /**
@@ -162,41 +137,45 @@ export async function getMediaDetails(mediaId: string, accessToken: string): Pro
     "thumbnail_url",
   ].join(",");
 
-  const response = await fetch(
-    `${BASE_URL}/${mediaId}?fields=${fields}&access_token=${accessToken}`
-  );
+  const url = new URL(`${config.instagram.baseUrl}/${mediaId}`);
+  url.searchParams.append("fields", fields);
+  url.searchParams.append("access_token", accessToken);
 
-  if (!response.ok) {
-    const error: InstagramApiError = await response.json();
-    throw new Error(`Instagram API error: ${error.error.message}`);
+  try {
+    return await validateApiResponse<InstagramMedia>(await fetch(url.toString()), "Get media details");
+  } catch (error) {
+    throw handleInstagramError(error, "Get media details");
   }
-
-  const data: InstagramMedia = await response.json();
-  return data;
 }
 
 /**
  * Get all media posts with details for a user
  */
 export async function getUserMedia(limit = 10): Promise<InstagramMedia[]> {
-  const { userId, accessToken } = getInstagramConfig();
+  validateConfig();
 
   // Get media IDs
-  const mediaIds = await getUserMediaIds(userId, accessToken);
+  const mediaIds = await getUserMediaIds(config.instagram.userId!, config.instagram.accessToken!);
+  logger.debug(`Fetched ${mediaIds.length} media IDs`);
 
   // Get details for each media item (limit to specified number)
   const limitedIds = mediaIds.slice(0, limit);
-  const mediaPromises = limitedIds.map((id) => getMediaDetails(id, accessToken));
+  const mediaPromises = limitedIds.map((id) => getMediaDetails(id, config.instagram.accessToken!));
   const mediaItems = await Promise.all(mediaPromises);
 
+  logger.debug(`Fetched details for ${mediaItems.length} media items`);
+
   // Filter out non-IMAGE types (we only want images for the gallery)
-  return mediaItems
+  const filtered = mediaItems
     .filter((item) => item.media_type === "IMAGE")
     .map((item) => ({
       ...item,
       caption: item.caption || "",
       like_count: item.like_count || 0,
     }));
+
+  logger.debug(`Filtered to ${filtered.length} image items`);
+  return filtered;
 }
 
 /**
@@ -216,17 +195,21 @@ export function formatInstagramPost(media: InstagramMedia) {
 }
 
 /**
- * Get relative time string (e.g., "2 days ago")
+ * Validate configuration and throw if missing
  */
-function getRelativeTime(date: Date): string {
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+function validateConfig() {
+  const required = [
+    config.instagram.appId,
+    config.instagram.appSecret,
+    config.instagram.accessToken,
+    config.instagram.userId,
+  ];
 
-  if (diffDays === 0) return "today";
-  if (diffDays === 1) return "yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-  return `${Math.floor(diffDays / 365)} years ago`;
+  const missing = required.filter((value) => !value);
+
+  if (missing.length > 0) {
+    const error = new Error("Missing required Instagram API environment variables");
+    logger.error("Config validation failed", error);
+    throw error;
+  }
 }

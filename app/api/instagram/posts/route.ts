@@ -6,6 +6,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getUserMedia, formatInstagramPost } from "@/lib/instagram-api";
+import { createLogger } from "@/lib/logger";
+import { handleApiError } from "@/lib/error-handler";
+import { config } from "@/lib/config";
 import type { InstagramMedia } from "@/types/instagram";
 
 // Simple in-memory cache (for production, use Redis or similar)
@@ -21,7 +24,7 @@ let cache: {
   timestamp: number;
 } | null = null;
 
-const CACHE_DURATION = 1000 * 60 * 60; // 1 hour in milliseconds
+const logger = createLogger("instagram-posts-api");
 
 // Validation schema for query parameters
 const postsQuerySchema = z.object({
@@ -40,18 +43,18 @@ export async function GET(request: NextRequest) {
     const { limit, forceRefresh } = postsQuerySchema.parse(Object.fromEntries(searchParams));
 
     // Check cache (unless force refresh is requested)
-    if (!forceRefresh && cache && Date.now() - cache.timestamp < CACHE_DURATION) {
-      console.log("Returning cached Instagram posts");
+    if (!forceRefresh && cache && Date.now() - cache.timestamp < config.cache.instagramPostsDuration) {
+      logger.info("Returning cached Instagram posts");
       return NextResponse.json({
         success: true,
         posts: cache.data.slice(0, limit),
         cached: true,
-        cacheAge: Math.floor((Date.now() - cache.timestamp) / 1000), // seconds
+        cacheAge: Math.floor((Date.now() - cache.timestamp) / 1000),
       });
     }
 
     // Fetch fresh data from Instagram API
-    console.log("Fetching fresh Instagram posts...");
+    logger.info("Fetching fresh Instagram posts...");
     const mediaItems: InstagramMedia[] = await getUserMedia(limit);
 
     // Format posts for frontend
@@ -69,11 +72,11 @@ export async function GET(request: NextRequest) {
       cached: false,
     });
   } catch (error) {
-    console.error("Instagram posts API error:", error);
+    const errorResponse = handleApiError(error, "Fetch Instagram posts");
 
     // If there's an error but we have cached data, return it
     if (cache) {
-      console.log("Returning cached data due to error");
+      logger.warn("Returning cached data due to error");
       return NextResponse.json(
         {
           success: true,
@@ -86,14 +89,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Return error if no cache available
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Failed to fetch Instagram posts",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }
 
