@@ -71,3 +71,15 @@ export interface InstagramApiError {
     error_user_msg?: string;
   };
 }
+
+/**
+ * Formatted Instagram post for frontend display
+ */
+export interface InstagramPost {
+  id: string;
+  image: string;
+  caption: string;
+  likes: number;
+  date: string;
+  permalink: string;
+}

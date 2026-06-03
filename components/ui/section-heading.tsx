@@ -1,5 +1,3 @@
-"use client";
-
 type SectionHeadingProps = {
   label: string;
   title: string;

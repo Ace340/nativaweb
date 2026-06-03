@@ -7,8 +7,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { exchangeCodeForToken, getLongLivedToken, getUserInfo } from "@/lib/instagram-api";
 import { createLogger } from "@/lib/logger";
 import { handleApiError } from "@/lib/error-handler";
-import { config, validateConfig } from "@/lib/config";
+import { config } from "@/lib/config";
 import { z } from "zod";
+import type { AccessTokenResponse } from "@/types/instagram";
+import type { InstagramUser } from "@/types/instagram";
 
 const logger = createLogger("instagram-callback-api");
 
@@ -30,9 +32,9 @@ export async function GET(request: NextRequest) {
     const parsed = callbackQuerySchema.safeParse(searchParams);
 
     if (!parsed.success) {
-      logger.warn("Invalid callback parameters", { errors: parsed.error.errors });
+      logger.warn("Invalid callback parameters", { errors: parsed.error.issues });
       return NextResponse.json(
-        { error: "Invalid callback parameters", details: parsed.error.errors },
+        { error: "Invalid callback parameters", details: parsed.error.issues },
         { status: 400 }
       );
     }
@@ -78,7 +80,7 @@ export async function GET(request: NextRequest) {
 /**
  * Generate success HTML page for OAuth callback
  */
-function generateSuccessHtml(token: any, user: any) {
+function generateSuccessHtml(token: AccessTokenResponse, user: InstagramUser) {
   return `
     <!DOCTYPE html>
     <html>

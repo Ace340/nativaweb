@@ -25,7 +25,7 @@ export function FAQSection() {
         {faqs.map((faq) => (
           <motion.div
             key={faq.question}
-            className="rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.6)] p-6"
+            className="rounded-3xl border border-[var(--card-border)] bg-[rgba(44,60,20,0.6)] p-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -9,6 +9,12 @@
   --page-bg: var(--color-forest);
   --text-primary: var(--color-pale);
   --text-muted: var(--color-muted);
+
+  /* Card surfaces */
+  --card-bg: rgba(44, 60, 20, 0.7);
+  --card-bg-light: rgba(44, 60, 20, 0.55);
+  --card-border: rgba(189, 188, 178, 0.2);
+  --text-muted-faded: rgba(189, 188, 178, 0.65);
 }
 
 @layer base {

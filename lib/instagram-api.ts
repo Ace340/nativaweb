@@ -9,7 +9,7 @@ import type {
   InstagramUser,
   AccessTokenResponse,
 } from "@/types/instagram";
-import { config } from "./config";
+import { config, validateConfig } from "./config";
 import { handleInstagramError, validateApiResponse } from "./error-handler";
 import { createLogger } from "./logger";
 import { getRelativeTime } from "./utils";
@@ -192,24 +192,4 @@ export function formatInstagramPost(media: InstagramMedia) {
     date: relativeTime,
     permalink: media.permalink,
   };
-}
-
-/**
- * Validate configuration and throw if missing
- */
-function validateConfig() {
-  const required = [
-    config.instagram.appId,
-    config.instagram.appSecret,
-    config.instagram.accessToken,
-    config.instagram.userId,
-  ];
-
-  const missing = required.filter((value) => !value);
-
-  if (missing.length > 0) {
-    const error = new Error("Missing required Instagram API environment variables");
-    logger.error("Config validation failed", error);
-    throw error;
-  }
 }

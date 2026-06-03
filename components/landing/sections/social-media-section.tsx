@@ -1,22 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { sectionVariant } from "@/components/landing/section-motion";
 import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { instagramPosts } from "@/components/landing/landing-data";
+import { config } from "@/lib/config";
+import type { InstagramPost } from "@/types/instagram";
 import { useEffect, useState } from "react";
-
-const INSTAGRAM_HANDLE = "your-handmade-bags"; // TODO: Move to env var
-
-interface InstagramPost {
-  id: string;
-  image: string;
-  caption: string;
-  likes: number;
-  date: string;
-  permalink: string;
-}
 
 export function SocialMediaSection() {
   const [posts, setPosts] = useState<InstagramPost[]>([]);
@@ -76,7 +68,7 @@ export function SocialMediaSection() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="animate-pulse rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)] aspect-square"
+              className="animate-pulse rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] aspect-square"
             />
           ))}
         </div>
@@ -85,7 +77,7 @@ export function SocialMediaSection() {
           {posts.map((post, index) => (
             <motion.div
               key={post.id}
-              className="group relative overflow-hidden rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)]"
+              className="group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -93,10 +85,12 @@ export function SocialMediaSection() {
             >
               <div className="relative aspect-square overflow-hidden">
                 <a href={post.permalink} target="_blank" rel="noopener noreferrer">
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.caption}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,60,20,0.9)] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </a>
@@ -105,7 +99,7 @@ export function SocialMediaSection() {
                   <p className="text-sm leading-relaxed text-[var(--text-muted)] line-clamp-2">
                     {post.caption}
                   </p>
-                  <div className="mt-3 flex items-center justify-between text-xs text-[rgba(189,188,178,0.65)]">
+                  <div className="mt-3 flex items-center justify-between text-xs text-[var(--text-muted-faded)]">
                     <div className="flex items-center gap-1">
                       <InstagramIcon />
                       <span>{post.likes.toLocaleString()} likes</span>
@@ -126,7 +120,7 @@ export function SocialMediaSection() {
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         <a
-          href="https://www.instagram.com/your-handmade-bags"
+          href={config.socialMedia.instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-[var(--color-gold)] bg-transparent px-6 py-3 text-sm font-semibold text-[var(--color-gold)] transition-all hover:bg-[var(--color-gold)] hover:text-[var(--color-forest)]"

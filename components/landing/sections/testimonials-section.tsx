@@ -25,10 +25,10 @@ export function TestimonialsSection() {
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.name}
-            className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.7)] p-6"
+            className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
           >
             <p className="text-base leading-relaxed text-[var(--text-muted)]">“{testimonial.quote}”</p>
-            <div className="flex items-center justify-between text-sm text-[rgba(189,188,178,0.65)]">
+            <div className="flex items-center justify-between text-sm text-[var(--text-muted-faded)]">
               <div>
                 <p className="text-sm font-semibold text-[var(--text-primary)]">{testimonial.name}</p>
                 <p>{testimonial.role}</p>

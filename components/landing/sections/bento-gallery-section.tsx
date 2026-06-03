@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const galleryItems = [
   {
     src: "/gallery4.png",
-    alt: "fique Fiber",
+    alt: "Fique Fiber",
     title: "Fique Fiber",
     description: "When extracted, the fiber is washed and dried naturally.",
     className: "md:col-span-4 md:row-span-2 lg:col-span-6",
@@ -20,21 +20,21 @@ const galleryItems = [
   },
   {
     src: "/gallery1.jpg",
-    alt: "ambar bag model",
+    alt: "Ambar handbag modeled",
     title: "Ambar Handbag",
     className: "md:col-span-2 lg:col-span-3",
     sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery2.jpg",
-    alt: "Ambar bag detail",
+    alt: "Ambar handbag styling",
     title: "Fit every style",
     className: "md:col-span-2 lg:col-span-3",
     sizes: "(max-width: 767px) 100vw, (max-width: 1279px) 34vw, 25vw",
   },
   {
     src: "/gallery3.jpg",
-    alt: "Ambar bag detail",
+    alt: "Handbag durability showcase",
     title: "Light and durable",
     className: "md:col-span-6 lg:col-span-12",
     sizes: "(max-width: 767px) 100vw, 100vw",
@@ -51,6 +51,7 @@ const galleryItems = [
 export function BentoGallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
   const featuredSrc = "/gallery4.png";
+  const refreshTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useLayoutEffect(() => {
     if (!sectionRef.current) return;
@@ -77,7 +78,10 @@ export function BentoGallerySection() {
       );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      if (refreshTimeout.current) clearTimeout(refreshTimeout.current);
+    };
   }, []);
 
   return (
@@ -101,7 +105,10 @@ export function BentoGallerySection() {
               fill
               sizes={item.sizes}
               className="object-cover transition duration-700 group-hover:scale-105"
-              onLoadingComplete={() => ScrollTrigger.refresh()}
+              onLoadingComplete={() => {
+                clearTimeout(refreshTimeout.current);
+                refreshTimeout.current = setTimeout(() => ScrollTrigger.refresh(), 100);
+              }}
             />
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />

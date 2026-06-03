@@ -27,7 +27,7 @@ type ProductCardProps = {
 export function ProductCard({ product, index }: ProductCardProps) {
   return (
     <motion.article
-      className="flex flex-col gap-6 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(44,60,20,0.55)] p-6 shadow-2xl shadow-black/40"
+      className="flex flex-col gap-6 rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg-light)] p-6 shadow-2xl shadow-black/40"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -70,7 +70,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
           <a
             href={product.amazonUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="w-full text-center"
           >
             Buy on Amazon

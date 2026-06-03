@@ -1,16 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
-const NAV_LINKS = [
-  { label: "Gallery", href: "#gallery" },
-  { label: "Products", href: "#products" },
-  { label: "Benefits", href: "#benefits" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Artisan", href: "#artisan" },
-];
+import { NAV_LINKS } from "@/components/landing/landing-data";
 
 function useHideOnScroll(threshold = 48) {
   const [hidden, setHidden] = useState(false);
@@ -50,10 +43,13 @@ export function LandingNavbar() {
           className="shrink-0 cursor-pointer"
           aria-label="Scroll to top"
         >
-          <img
+          <Image
             src="/logo.svg"
             alt="Nativa Handbags Logo"
+            width={56}
+            height={56}
             className="h-12 w-auto sm:h-14 transition-transform hover:scale-105"
+            priority
           />
         </button>
 

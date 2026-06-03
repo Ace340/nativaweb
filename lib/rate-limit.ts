@@ -5,12 +5,9 @@
  * NOTE: In production, use Redis or Vercel KV for distributed rate limiting
  */
 
-const createLogger = () => ({
-  info: (msg: string, data?: any) => console.log(`[rate-limit] ${msg}`, data || ""),
-  warn: (msg: string, data?: any) => console.warn(`[rate-limit] ${msg}`, data || ""),
-});
+import { createLogger } from "./logger";
 
-const logger = createLogger();
+const logger = createLogger("rate-limit");
 
 interface RateLimitStore {
   [key: string]: {

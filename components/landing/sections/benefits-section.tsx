@@ -19,13 +19,13 @@ export function BenefitsSection() {
       <SectionHeading
         label="Benefits"
         title="Why choosing Nativa means sustainability"
-        description="Created with eco firendly materials, crafted by hand, and supporting small artisans."
+        description="Created with eco friendly materials, crafted by hand, and supporting small artisans."
       />
       <div className="grid gap-6 md:grid-cols-3">
         {benefits.map((benefit) => (
           <div
             key={benefit.title}
-            className="space-y-3 rounded-3xl border border-[rgba(189,188,178,0.2)] bg-[rgba(216,187,124,0.08)] p-6 shadow-lg shadow-black/40"
+            className="space-y-3 rounded-3xl border border-[var(--card-border)] bg-[rgba(216,187,124,0.08)] p-6 shadow-lg shadow-black/40"
           >
             <p className="text-sm uppercase tracking-[0.4em] text-[var(--color-gold)]">{benefit.title}</p>
             <p className="text-base text-[var(--text-muted)]">{benefit.description}</p>

@@ -1,5 +1,14 @@
 import type { Product } from "@/components/product-card";
 
+export const NAV_LINKS = [
+  { label: "Gallery", href: "#gallery" },
+  { label: "Products", href: "#products" },
+  { label: "Benefits", href: "#benefits" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Artisan", href: "#artisan" },
+] as const;
+
 export const products: Product[] = [
   {
     id: "ambar-bag",
@@ -54,7 +63,7 @@ export const benefits = [
 export const testimonials = [
   {
     quote:
-      "Great handbag, spacious, stylish and well-made. It fits all my personal belongs and it's easy to carry. I will definetely recommend it.",
+      "Great handbag, spacious, stylish and well-made. It fits all my personal belongs and it's easy to carry. I will definitely recommend it.",
     name: "Silvia D.",
     role: "Creative Director, Atelier Mereo",
     rating: "4.9 / 5",
