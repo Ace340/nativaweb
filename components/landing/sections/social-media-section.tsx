@@ -8,38 +8,52 @@ import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { instagramPosts } from "@/components/landing/landing-data";
 import { config } from "@/lib/config";
 import type { InstagramPost } from "@/types/instagram";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+/**
+ * Instagram API temporarily disabled — missing environment variables
+ * (INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_USER_ID).
+ * Section renders static posts from landing-data.ts in the meantime.
+ *
+ * To re-enable:
+ * 1. Create .env.local with the four INSTAGRAM_* variables
+ * 2. Restore the useEffect below and the original state initializers
+ * 3. Add useEffect back to the react import
+ */
 export function SocialMediaSection() {
-  const [posts, setPosts] = useState<InstagramPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [usingCache, setUsingCache] = useState(false);
+  const [posts] = useState<InstagramPost[]>(instagramPosts);
+  const [loading] = useState(false);
+  const [error] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchInstagramPosts() {
-      try {
-        const response = await fetch("/api/instagram/posts?limit=3");
-        const data = await response.json();
+  // const [posts, setPosts] = useState<InstagramPost[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+  // const [usingCache, setUsingCache] = useState(false);
 
-        if (data.success) {
-          setPosts(data.posts);
-          setUsingCache(data.cached || false);
-          setError(null);
-        } else {
-          throw new Error(data.error || "Failed to fetch posts");
-        }
-      } catch (err) {
-        console.error("Instagram fetch error:", err);
-        setPosts(instagramPosts);
-        setError("Using static data - Instagram API unavailable");
-      } finally {
-        setLoading(false);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchInstagramPosts() {
+  //     try {
+  //       const response = await fetch("/api/instagram/posts?limit=3");
+  //       const data = await response.json();
 
-    fetchInstagramPosts();
-  }, []);
+  //       if (data.success) {
+  //         setPosts(data.posts);
+  //         setUsingCache(data.cached || false);
+  //         setError(null);
+  //       } else {
+  //         throw new Error(data.error || "Failed to fetch posts");
+  //       }
+  //     } catch (err) {
+  //       console.error("Instagram fetch error:", err);
+  //       setPosts(instagramPosts);
+  //       setError("Using static data - Instagram API unavailable");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchInstagramPosts();
+  // }, []);
 
   return (
     <motion.section
