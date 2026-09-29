@@ -12,3 +12,10 @@ dist/
 .env*.local
 .DS_Store
 *.log
+
+# Build artifacts
+*.tsbuildinfo
+
+# Agent tooling
+.opencode/
+install.sh
