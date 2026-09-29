@@ -89,7 +89,7 @@ export function BentoGallerySection() {
       <SectionHeading
         label="Gallery"
         title="A style that matches your inner vibe"
-        description="Nativa products are the perfect fit for your lifestyle, whether you're heading to the office, exploring the city, or enjoying a weekend getaway. Our bags are designed to complement your unique style and keep up with your dynamic life."
+        description="Naitive products are the perfect fit for your lifestyle, whether you're heading to the office, exploring the city, or enjoying a weekend getaway. Our bags are designed to complement your unique style and keep up with your dynamic life."
       />
 
       <div className="grid auto-rows-[minmax(14rem,auto)] gap-4 md:grid-cols-6 md:auto-rows-[16rem] lg:grid-cols-12 lg:auto-rows-[18rem] lg:grid-flow-dense">

@@ -45,7 +45,7 @@ export function LandingNavbar() {
         >
           <Image
             src="/logo.svg"
-            alt="Nativa Handbags Logo"
+            alt="Naitive Handbags Logo"
             width={56}
             height={56}
             className="h-12 w-auto sm:h-14 transition-transform hover:scale-105"

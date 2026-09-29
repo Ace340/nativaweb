@@ -1,11 +1,11 @@
 # NTV Landing Page
 
-A Next.js 15 landing page for NTV (Nativa Handbags) - a Colombian company crafting handmade bags, showcasing products, benefits, testimonials, and the artisan story.
+A Next.js 15 landing page for NTV (Naitive Handbags) - a Colombian company crafting handmade bags, showcasing products, benefits, testimonials, and the artisan story.
 
 ## Language
 
 **NTV**:
-The brand name for Nativa Handbags, a Colombian company specializing in handmade bags.
+The brand name for Naitive Handbags, a Colombian company specializing in handmade bags.
 _Avoid_: The company, the brand, our business
 
 **Navigation Links**:

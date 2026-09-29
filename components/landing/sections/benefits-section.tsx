@@ -18,7 +18,7 @@ export function BenefitsSection() {
     >
       <SectionHeading
         label="Benefits"
-        title="Why choosing Nativa means sustainability"
+        title="Why choosing Naitive means sustainability"
         description="Created with eco friendly materials, crafted by hand, and supporting small artisans."
       />
       <div className="grid gap-6 md:grid-cols-3">
