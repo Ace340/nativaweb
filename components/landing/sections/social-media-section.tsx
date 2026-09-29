@@ -1,29 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { SectionHeading } from "@/components/ui/section-heading";
+// import Image from "next/image";
+// import { SectionHeading } from "@/components/ui/section-heading";
 import { sectionVariant } from "@/components/landing/section-motion";
 import { InstagramIcon } from "@/components/ui/instagram-icon";
-import { instagramPosts } from "@/components/landing/landing-data";
+// import { instagramPosts } from "@/components/landing/landing-data";
 import { config } from "@/lib/config";
-import type { InstagramPost } from "@/types/instagram";
-import { useState } from "react";
+// import type { InstagramPost } from "@/types/instagram";
+// import { useState } from "react";
 
 /**
  * Instagram API temporarily disabled — missing environment variables
  * (INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_USER_ID).
- * Section renders static posts from landing-data.ts in the meantime.
+ * Posts feed is hidden; the section renders only the follow button.
  *
  * To re-enable:
  * 1. Create .env.local with the four INSTAGRAM_* variables
  * 2. Restore the useEffect below and the original state initializers
  * 3. Add useEffect back to the react import
+ * 4. Uncomment the heading and posts grid in the JSX
  */
 export function SocialMediaSection() {
-  const [posts] = useState<InstagramPost[]>(instagramPosts);
-  const [loading] = useState(false);
-  const [error] = useState<string | null>(null);
+  // const [posts] = useState<InstagramPost[]>(instagramPosts);
+  // const [loading] = useState(false);
+  // const [error] = useState<string | null>(null);
 
   // const [posts, setPosts] = useState<InstagramPost[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -65,6 +66,10 @@ export function SocialMediaSection() {
       transition={{ duration: 0.8 }}
       variants={sectionVariant}
     >
+      {/* Instagram feed temporarily hidden — section shows only the follow button.
+          To restore: uncomment the heading and posts grid below,
+          plus the commented imports and state hooks at the top of the file. */}
+      {/*
       <SectionHeading
         label="Follow Us"
         title="Stay connected on Instagram"
@@ -125,6 +130,7 @@ export function SocialMediaSection() {
           ))}
         </div>
       )}
+      */}
 
       <motion.div
         className="text-center"
