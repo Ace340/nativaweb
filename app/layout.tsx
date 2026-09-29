@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen Artisan Landing | High-converting showcase",
+  title: "Naitive Handcrafted",
   description:
     "Dual-product ecommerce-style landing page built with Next.js 15, Tailwind CSS, Framer Motion, and shadcn/ui components."
 };
