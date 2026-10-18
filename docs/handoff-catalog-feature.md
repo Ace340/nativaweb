@@ -46,11 +46,17 @@ Env contract: `SHOPIFY_STORE_DOMAIN` + `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
 - [x] `app/actions/cart.ts` — logger.error two-arg form (dropped the
       explicit `undefined`)
 
-### 2. Stale-cart discrimination (review warning #2)
-`getCart()` returns null for both "purged cart" and "network error", so recovery
-can clear a live cart after transient failures. Refactor to a discriminated
-status (`no-cookie | not-found | found | error`); recover only on `not-found`.
-Pairs naturally with #3.
+### 2. Stale-cart discrimination (review warning #2) — ✅ DONE
+`getCart()` returned null for both "purged cart" and "network error", so
+recovery could clear a live cart after transient failures. Now:
+`lib/shopify/cart.ts` exports `CartLookup` (`no-cookie | not-found |
+found | error`) via `getCartLookup()`; only `not-found` (HTTP 200 with
+`cart: null` — definitive) licenses recovery. `app/actions/cart.ts`
+recovers via `isCartDefinitelyGone()`; on `error` the cookie stays put
+and the visitor retries (add-on-error now drops the add instead of
+recreating over a possibly-live cart). `getCart()` remains as a thin
+`found`-only wrapper for render paths. NOTE: when #3 tests land,
+`CartLookup` status mapping deserves coverage.
 
 ### 3. Test infra + pure-core tests (review warning #3)
 No test framework in repo. Suggested: vitest. Target the exported pure

@@ -15,12 +15,15 @@
  *
  * Stale-cart recovery: a mutation can fail because the cookie points at a
  * cart Shopify no longer has (expired/purged) or because the request
- * failed. We only take recovery steps once a fresh getCart() confirms the
- * cart is REALLY gone, so a transient failure never destroys a live cart:
+ * failed. The two are distinguished by a fresh getCartLookup(): only the
+ * definitive "not-found" status licenses recovery — an "error" lookup
+ * means the cart's fate is unknown and is treated as possibly-live, so a
+ * transient failure never destroys a real cart:
  * - addToCartAction: recreate the cart with the incoming line and
- *   overwrite the cookie (the add is never silently lost);
- * - update/remove: delete the cookie so /cart falls back to the empty
- *   state instead of looping on an unusable cart ID.
+ *   overwrite the cookie ONLY once "not-found" is confirmed (on
+ *   "error" the add is dropped to retry, never the live cart);
+ * - update/remove: delete the cookie only on "not-found" so /cart falls
+ *   back to the empty state instead of looping on an unusable cart ID.
  */
 
 import { revalidatePath } from "next/cache";
@@ -30,7 +33,7 @@ import {
   CART_COOKIE_NAME,
   addLine,
   createCartWithLine,
-  getCart,
+  getCartLookup,
   readCartId,
   removeLine,
   updateLineQuantity,
@@ -77,21 +80,28 @@ async function clearCartId(): Promise<void> {
   cookieStore.delete(CART_COOKIE_NAME);
 }
 
-/** True when Shopify still knows the cookie's cart. False for stale/unconfigured. */
-async function isCartReachable(): Promise<boolean> {
-  return (await getCart()) !== null;
+/**
+ * Definitive proof the cookie's cart is gone: Shopify itself said
+ * "not-found". Every other lookup status — "error" above all — leaves
+ * the cart's fate unknown and must be treated as possibly-live.
+ */
+async function isCartDefinitelyGone(): Promise<boolean> {
+  const lookup = await getCartLookup();
+  return lookup.status === "not-found";
 }
 
 /**
- * Shared recovery for update/remove failures: clear the cookie ONLY once a
- * fresh read confirms the cart is gone (see file header).
+ * Shared recovery for update/remove failures: clear the cookie ONLY on
+ * the definitive "not-found" status (see file header).
  */
 async function recoverFromUnreachableCart(actionName: string): Promise<void> {
-  if (await isCartReachable()) {
-    logger.error(`${actionName}: mutation failed on a live cart — leaving cookie untouched`);
+  if (!(await isCartDefinitelyGone())) {
+    logger.error(
+      `${actionName}: mutation failed without cart-gone confirmation — leaving cookie untouched`,
+    );
     return;
   }
-  logger.warn(`${actionName}: cart no longer exists — clearing stale cart cookie`);
+  logger.warn(`${actionName}: cart confirmed gone — clearing stale cart cookie`);
   await clearCartId();
 }
 
@@ -131,13 +141,14 @@ export async function addToCartAction(formData: FormData): Promise<void> {
         revalidateAfterCartChange();
         return;
       }
-      if (await isCartReachable()) {
-        // Transient failure on a live cart (already logged in lib) — keep the cart.
-        logger.warn("addToCartAction: addLine failed on a live cart");
+      if (!(await isCartDefinitelyGone())) {
+        // Cart fate unknown (transient failure — already logged in lib):
+        // keep the cookie and the possibly-live cart; the visitor retries.
+        logger.warn("addToCartAction: addLine failed without cart-gone confirmation");
         revalidateAfterCartChange();
         return;
       }
-      logger.warn("addToCartAction: stale cart ID — recreating cart with the new line");
+      logger.warn("addToCartAction: cart confirmed gone — recreating cart with the new line");
     }
 
     const newCart = await createCartWithLine(variantId, quantity);

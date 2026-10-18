@@ -10,8 +10,9 @@
  * httpOnly `ntv_cart` cookie and never leaves the server. This module
  * never writes cookies — cookies may only be written in Server Actions /
  * Route Handlers, so cookie set/delete is exclusively the action layer's
- * job (getCart cannot recover from a stale cookie itself; it returns null
- * and lets the actions recover).
+ * job (getCartLookup cannot recover from a stale cookie itself; it reports
+ * WHY the Cart is absent, and the actions recover only on definitive
+ * evidence — see getCartLookup).
  *
  * Unconfigured state (env vars missing) is valid: every function degrades
  * to a null Cart, mirroring products.ts.
@@ -193,16 +194,43 @@ export async function readCartId(): Promise<string | null> {
 
 // ── Public Cart reads (always uncached) ──────────────────────────────────────
 
+/** Discriminated Cart lookup: WHY there is — or isn't — a Cart. */
+export type CartLookup =
+  /** No cart cookie: the visitor has no Cart on this device. */
+  | { readonly status: "no-cookie" }
+  /**
+   * Shopify confirmed the cookie's cart no longer exists (HTTP 200 with
+   * `cart: null`). The ONLY status that licenses destructive recovery —
+   * clearing or replacing the cookie.
+   */
+  | { readonly status: "not-found" }
+  /** The Cart, fetched and mapped. */
+  | { readonly status: "found"; readonly cart: Cart }
+  /**
+   * The lookup failed (network error, GraphQL error, unconfigured) — the
+   * cart's fate is UNKNOWN. Recovery must not run: the cart might be
+   * alive, and a transient failure must never destroy it (review
+   * warning #2).
+   */
+  | { readonly status: "error" };
+
 /**
- * The visitor's Cart, or null when: no cart cookie, Shopify unconfigured,
- * the fetch fails, or the cookie points at a cart Shopify no longer has
- * (stale). A stale cookie CANNOT be cleared here (RSC may not write
- * cookies) — the action layer recovers on the next mutation.
+ * Look up the visitor's Cart WITH the reason for its absence. Recovery
+ * decisions hinge on that reason: only "not-found" proves the cart is
+ * gone; "error" is indeterminate and must be treated as possibly-live.
+ * A stale cookie CANNOT be cleared here (RSC may not write cookies) —
+ * the action layer recovers on the next mutation.
  */
-export async function getCart(): Promise<Cart | null> {
+export async function getCartLookup(): Promise<CartLookup> {
   const cartId = await readCartId();
-  if (!cartId || !isShopifyConfigured()) {
-    return null;
+  if (!cartId) {
+    return { status: "no-cookie" };
+  }
+
+  if (!isShopifyConfigured()) {
+    // Unconfigured is valid, not exceptional (file header) — but the
+    // cookie's cart cannot be verified, so its fate is unknown.
+    return { status: "error" };
   }
 
   const result = await shopifyFetch<CartGetData>(CART_GET_QUERY, {
@@ -210,11 +238,22 @@ export async function getCart(): Promise<Cart | null> {
   });
 
   if (!result.success) {
-    logger.error("Failed to fetch cart (possibly a stale cart ID)", result.error);
-    return null;
+    logger.error("Failed to fetch cart — cart status unknown", result.error);
+    return { status: "error" };
   }
 
-  return result.data.cart ? mapCart(result.data.cart) : null;
+  return result.data.cart
+    ? { status: "found", cart: mapCart(result.data.cart) }
+    : { status: "not-found" };
+}
+
+/**
+ * Convenience for render paths that only need the Cart: null for every
+ * non-"found" status. Recovery decisions must use getCartLookup instead.
+ */
+export async function getCart(): Promise<Cart | null> {
+  const lookup = await getCartLookup();
+  return lookup.status === "found" ? lookup.cart : null;
 }
 
 // ── Public Cart mutations ────────────────────────────────────────────────────
