@@ -65,7 +65,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
         </ul>
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto space-y-3">
         <Button asChild variant="secondary" className="w-full">
           <a
             href={product.amazonUrl}
@@ -76,6 +76,14 @@ export function ProductCard({ product, index }: ProductCardProps) {
             Buy on Amazon
           </a>
         </Button>
+        {/* Transition (GLOSSARY): Direct Channel coexists with the Amazon
+            Channel; the Amazon CTA is removed once Direct sales are stable. */}
+        <a
+          href="/shop"
+          className="block text-center text-sm font-medium text-[var(--text-muted)] underline-offset-4 transition-colors hover:text-[var(--color-gold)] hover:underline"
+        >
+          or buy direct in our shop
+        </a>
       </div>
     </motion.article>
   );

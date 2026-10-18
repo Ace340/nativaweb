@@ -1,5 +1,6 @@
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ProductCard } from "@/components/product-card";
+import { Button } from "@/components/ui/button";
 import { products } from "@/components/landing/landing-data";
 
 export function ProductsSection() {
@@ -14,6 +15,13 @@ export function ProductsSection() {
         {products.map((product, index) => (
           <ProductCard key={product.id} product={product} index={index} />
         ))}
+      </div>
+      {/* Direct Channel CTA — the Catalog lives at /shop (GLOSSARY: Landing Page
+          previews the Catalog and links to it). */}
+      <div className="flex justify-center pt-4">
+        <Button asChild variant="primary">
+          <a href="/shop">Shop the full collection</a>
+        </Button>
       </div>
     </section>
   );
