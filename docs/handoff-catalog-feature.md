@@ -14,6 +14,9 @@ The headless Shopify build (ADR-0001) is **code-complete and reviewed**:
   review polish (quick wins) committed after. Verification re-run after polish:
   `npx tsc --noEmit` ✅ · `npm run lint` ✅ · `npm run build` ✅ (with NO
   Shopify env vars — graceful degradation holds).
+- ⚠️ `npm audit`: 1 HIGH in prod deps — `next@16.3.6` (advisory range
+  16.0.0–16.3.7); non-breaking patch fix available (`npm audit fix` →
+  16.3.8+). Flagged 2026-10-18, not applied (out of session scope).
 
 ## Architecture map (all new unless noted)
 
@@ -58,11 +61,20 @@ recreating over a possibly-live cart). `getCart()` remains as a thin
 `found`-only wrapper for render paths. NOTE: when #3 tests land,
 `CartLookup` status mapping deserves coverage.
 
-### 3. Test infra + pure-core tests (review warning #3)
-No test framework in repo. Suggested: vitest. Target the exported pure
-functions first (no mocks needed): `findVariantByOptions`, `selectOptionValue`,
-`deriveOptionGroups` (variant-picker.tsx), `getPriceBounds`/`formatPrice`
-(format-price.ts), `mapCatalogVariant`/`mapCart` mappers, `collectEdgeNodes`.
+### 3. Test infra + pure-core tests (review warning #3) — ✅ DONE
+**Vitest 5.0.5** (`npm test` = `vitest run`; node env default; `@` alias in
+`vitest.config.mts` — `.mts` so Vite 8's native config loader reads it
+without warnings). Dev-dep bump shipped with it: `@types/node` ^20 → ^24
+(matches the real Node v24 runtime; vitest 5 peers on it). **47 tests /
+5 colocated files**, all pure-core, no mocks except a `vi.mock("next/headers")`
+stub in cart.test.ts (the module imports it for the cookie read path):
+`format-price.test.ts`, `stock-level.test.ts` (`formatLowStockHint`),
+`variant-picker.test.ts` (`findVariantByOptions`/`selectOptionValue`/
+`deriveOptionGroups`/`deriveInitialSelection`), `products.test.ts`
+(money/image/variant mappers + `collectEdgeNodes`), `cart.test.ts`
+(`mapCartLine`/`mapCart` — stock mapping, unit-price precedence, dropped
+non-Variant lines). NOT covered (would need fetch mocking): `getCartLookup`
+status mapping, `getCatalog`/`getProductByHandle` degradation, actions.
 
 ### 4. Shopify connection (business task)
 Work `docs/shopify-setup-checklist.md` (partner account → dev store → CAD →
