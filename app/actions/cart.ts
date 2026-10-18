@@ -35,13 +35,12 @@ import {
   removeLine,
   updateLineQuantity,
 } from "@/lib/shopify/cart";
+import { MAX_LINE_QUANTITY } from "@/types/cart";
 
 const logger = createLogger("cart-actions");
 
 /** 30 days — matches the task's cookie lifetime choice. */
 const CART_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
-/** Sanity cap for a single line's quantity; Shopify enforces real limits via userErrors. */
-const MAX_LINE_QUANTITY = 99;
 
 // ── Payload parsing (boundary validation) ────────────────────────────────────
 
@@ -143,7 +142,7 @@ export async function addToCartAction(formData: FormData): Promise<void> {
 
     const newCart = await createCartWithLine(variantId, quantity);
     if (!newCart) {
-      logger.error("addToCartAction: could not create a cart", undefined, { variantId });
+      logger.error("addToCartAction: could not create a cart", { variantId });
       revalidateAfterCartChange();
       return;
     }

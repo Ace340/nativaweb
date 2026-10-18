@@ -21,7 +21,7 @@ import { useFormStatus } from "react-dom";
 import { removeLineAction, updateLineAction } from "@/app/actions/cart";
 import { formatPrice } from "@/components/shop/format-price";
 import type { SelectedOption } from "@/types/catalog";
-import type { CartLine } from "@/types/cart";
+import { MAX_LINE_QUANTITY, type CartLine } from "@/types/cart";
 
 /** Shopify's placeholder option on single-variant Products ("Title" / "Default Title"). */
 const DEFAULT_OPTION_VALUE = "Default Title";
@@ -90,7 +90,9 @@ const REMOVE_BUTTON_CLASSES =
 export function CartLineRow({ line }: { line: CartLine }) {
   const { variant } = line;
   const optionSummary = formatOptionSummary(variant.selectedOptions);
-  const isAtMaxStock = variant.stockLevel !== null && line.quantity >= variant.stockLevel;
+  /** Stepper ceiling: Stock Level when tracked, never above the sanity cap. */
+  const maxQuantity = Math.min(variant.stockLevel ?? MAX_LINE_QUANTITY, MAX_LINE_QUANTITY);
+  const isAtMaxQuantity = line.quantity >= maxQuantity;
   const imageAlt = variant.image?.alt || variant.productTitle;
 
   return (
@@ -152,7 +154,7 @@ export function CartLineRow({ line }: { line: CartLine }) {
             <LineSubmitButton
               name="quantity"
               value={String(line.quantity + 1)}
-              disabled={isAtMaxStock}
+              disabled={isAtMaxQuantity}
               ariaLabel={`Increase quantity of ${variant.productTitle}`}
               className={STEPPER_BUTTON_CLASSES}
             >

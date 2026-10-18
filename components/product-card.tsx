@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -78,12 +79,12 @@ export function ProductCard({ product, index }: ProductCardProps) {
         </Button>
         {/* Transition (GLOSSARY): Direct Channel coexists with the Amazon
             Channel; the Amazon CTA is removed once Direct sales are stable. */}
-        <a
+        <Link
           href="/shop"
           className="block text-center text-sm font-medium text-[var(--text-muted)] underline-offset-4 transition-colors hover:text-[var(--color-gold)] hover:underline"
         >
           or buy direct in our shop
-        </a>
+        </Link>
       </div>
     </motion.article>
   );

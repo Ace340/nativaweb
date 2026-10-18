@@ -10,11 +10,10 @@ The headless Shopify build (ADR-0001) is **code-complete and reviewed**:
   product detail, cart with cookie-persisted server-side cart + checkout
   redirect, landing integration (Shop nav/CTA links, hero-stat swap).
 - Review verdict: **Approve**, 0 critical, 3 warnings, polish list (below).
-- Verification at last run: `npx tsc --noEmit` ✅ · `npm run lint` ✅ ·
-  `npm run build` ✅ (with NO Shopify env vars — graceful degradation holds).
-- **Changes are NOT committed.** First action next session: review
-  `git status`, commit (suggested split: foundation+UI as one commit, landing
-  integration as a second, or a single feature commit — repo style is loose).
+- Commit state: feature committed (`edd5754`), checklist + handoff (`01dd1c5`),
+  review polish (quick wins) committed after. Verification re-run after polish:
+  `npx tsc --noEmit` ✅ · `npm run lint` ✅ · `npm run build` ✅ (with NO
+  Shopify env vars — graceful degradation holds).
 
 ## Architecture map (all new unless noted)
 
@@ -33,15 +32,19 @@ Env contract: `SHOPIFY_STORE_DOMAIN` + `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
 
 ## Pending work (priority order)
 
-### 1. Quick wins (review items, user-approved for next session)
-- [ ] `<a href="/shop">` → `next/link` `<Link>` in 3 places:
+### 1. Quick wins (review items) — ✅ DONE (follow-up session)
+- [x] `<a href="/shop">` → `next/link` `<Link>` in 3 places:
       `components/landing/navbar.tsx:71`, `components/landing/sections/products-section.tsx`,
       `components/product-card.tsx` (the "buy direct" link)
-- [ ] Dedupe `LOW_STOCK_THRESHOLD` + "Only N left" formatting (duplicated in
-      `shop-product-card.tsx` and `variant-picker.tsx`) — extract beside `format-price.ts`
-- [ ] Cart stepper: cap at `Math.min(stockLevel ?? MAX, 99)` in
-      `components/cart/cart-line-row.tsx` (currently + silently no-ops above 99)
-- [ ] `app/actions/cart.ts:146` — logger.error two-arg form (drop explicit `undefined`)
+- [x] Dedupe `LOW_STOCK_THRESHOLD` + "Only N left" formatting — extracted to
+      `components/shop/stock-level.ts` (`formatLowStockHint(stockLevel)`), used
+      by `shop-product-card.tsx` and `variant-picker.tsx`
+- [x] Cart stepper: capped at `Math.min(stockLevel ?? MAX, 99)` in
+      `components/cart/cart-line-row.tsx` — `MAX_LINE_QUANTITY` now lives in
+      `types/cart.ts` so both the Server Action and the client row share it
+      (`"use server"` files can't export constants to clients)
+- [x] `app/actions/cart.ts` — logger.error two-arg form (dropped the
+      explicit `undefined`)
 
 ### 2. Stale-cart discrimination (review warning #2)
 `getCart()` returns null for both "purged cart" and "network error", so recovery

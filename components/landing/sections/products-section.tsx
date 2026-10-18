@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ export function ProductsSection() {
           previews the Catalog and links to it). */}
       <div className="flex justify-center pt-4">
         <Button asChild variant="primary">
-          <a href="/shop">Shop the full collection</a>
+          <Link href="/shop">Shop the full collection</Link>
         </Button>
       </div>
     </section>

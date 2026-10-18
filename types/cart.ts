@@ -19,6 +19,14 @@
 import type { CatalogImage, MoneyValue, SelectedOption } from "./catalog";
 
 /**
+ * Sanity cap for a single Cart Line's quantity — a domain rule, so it
+ * lives with the types and is importable by both Server Actions and
+ * client components ("use server" files may only export async functions).
+ * Shopify enforces the real limits via userErrors; this is ours.
+ */
+export const MAX_LINE_QUANTITY = 99;
+
+/**
  * The Variant a Cart Line holds, with just enough product context to
  * render and link back to the detail page (GLOSSARY: customers buy a
  * Variant, never a Product).

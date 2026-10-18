@@ -23,9 +23,7 @@ import { cn } from "@/lib/utils";
 import type { CatalogVariant, SelectedOption } from "@/types/catalog";
 import { AddToCartForm, type AddToCartAction } from "./add-to-cart-form";
 import { formatPrice } from "./format-price";
-
-/** At or below this Stock Level the selected Variant gets a low-stock hint. */
-const LOW_STOCK_THRESHOLD = 5;
+import { formatLowStockHint } from "./stock-level";
 
 /** Chosen value per option axis, e.g. { Color: "Olive", Size: "Large" }. */
 export type OptionSelection = Readonly<Record<string, string>>;
@@ -185,11 +183,9 @@ function VariantSummary({ variant }: { variant: CatalogVariant | null }) {
 
   const compareAt = variant.compareAtPrice;
   const hasCompareAt = compareAt !== null && compareAt.amount > variant.price.amount;
-  const isLowStock =
-    variant.availableForSale &&
-    variant.stockLevel !== null &&
-    variant.stockLevel > 0 &&
-    variant.stockLevel <= LOW_STOCK_THRESHOLD;
+  const stockHint = variant.availableForSale
+    ? formatLowStockHint(variant.stockLevel) ?? "In stock"
+    : "Sold out";
 
   return (
     <div className="space-y-1">
@@ -203,13 +199,7 @@ function VariantSummary({ variant }: { variant: CatalogVariant | null }) {
           </span>
         ) : null}
       </p>
-      <p className="text-sm text-[var(--text-muted)]">
-        {variant.availableForSale
-          ? isLowStock && variant.stockLevel !== null
-            ? `Only ${variant.stockLevel} left`
-            : "In stock"
-          : "Sold out"}
-      </p>
+      <p className="text-sm text-[var(--text-muted)]">{stockHint}</p>
     </div>
   );
 }

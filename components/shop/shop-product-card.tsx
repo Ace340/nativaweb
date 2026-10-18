@@ -7,9 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CatalogProduct } from "@/types/catalog";
 import { formatPriceRange } from "./format-price";
-
-/** At or below this Stock Level a Product gets its "Only N left" hint. */
-const LOW_STOCK_THRESHOLD = 5;
+import { formatLowStockHint } from "./stock-level";
 
 type ShopProductCardProps = {
   product: CatalogProduct;
@@ -33,9 +31,7 @@ function findLowStockLevel(product: CatalogProduct): number | null {
 export function ShopProductCard({ product, index }: ShopProductCardProps) {
   const [coverImage] = product.images;
   const priceRange = formatPriceRange(product.variants);
-  const lowStockLevel = findLowStockLevel(product);
-  const isLowStock =
-    lowStockLevel !== null && lowStockLevel > 0 && lowStockLevel <= LOW_STOCK_THRESHOLD;
+  const lowStockHint = formatLowStockHint(findLowStockLevel(product));
 
   return (
     <Link
@@ -70,9 +66,9 @@ export function ShopProductCard({ product, index }: ShopProductCardProps) {
           {priceRange ? (
             <span className="text-base font-medium text-[var(--color-gold)]">{priceRange}</span>
           ) : null}
-          {isLowStock ? (
+          {lowStockHint ? (
             <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">
-              Only {lowStockLevel} left
+              {lowStockHint}
             </span>
           ) : null}
         </div>
