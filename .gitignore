@@ -18,4 +18,5 @@ dist/
 
 # Agent tooling
 .opencode/
+.tmp/
 install.sh
