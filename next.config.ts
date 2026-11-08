@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        // Shopify CDN product imagery (cdn.shopify.com and siblings)
+        protocol: "https",
+        hostname: "*.shopify.com",
+        pathname: "/**",
+      },
     ],
   },
 };

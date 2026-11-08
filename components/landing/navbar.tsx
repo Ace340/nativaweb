@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { NAV_LINKS } from "@/components/landing/landing-data";
 
@@ -68,7 +69,7 @@ export function LandingNavbar() {
 
         <div className="flex shrink-0 items-center gap-3">
           <Button asChild variant="secondary" className="shrink-0 text-xs">
-            <a href="#cta">Shop Amazon</a>
+            <Link href="/shop">Shop</Link>
           </Button>
         </div>
       </div>

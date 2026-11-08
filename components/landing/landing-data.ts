@@ -1,6 +1,7 @@
 import type { Product } from "@/components/product-card";
 
 export const NAV_LINKS = [
+  { label: "Shop", href: "/shop" },
   { label: "Gallery", href: "#gallery" },
   { label: "Products", href: "#products" },
   { label: "Benefits", href: "#benefits" },
@@ -117,7 +118,7 @@ export const artisan = {
 
 export const heroStats = [
   { label: "Positive reviews", value: "4.9 / 5" },
-  { label: "Amazon Prime ready", value: "48-hour" },
+  { label: "Fulfillment", value: "Ships from Canada" },
   { label: "Limited editions", value: "120 units" },
 ];
 
