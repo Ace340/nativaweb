@@ -20,7 +20,7 @@ function makeMerchandise(
     price: { amount: 120, currencyCode: "CAD" },
     quantityAvailable: 4,
     selectedOptions: [{ name: "Color", value: "Olive" }],
-    image: { url: "https://cdn.example/x.jpg", alt: "Olive" },
+    image: { url: "https://cdn.example/x.jpg", altText: "Olive" },
     product: { title: "Ambar", handle: "ambar" },
     ...overrides,
   };

@@ -31,7 +31,7 @@ const VARIANT_FIELDS_FRAGMENT = /* GraphQL */ `
     }
     image {
       url
-      alt
+      altText
     }
   }
 `;
@@ -48,7 +48,7 @@ const PRODUCT_FIELDS_FRAGMENT = /* GraphQL */ `
           ... on MediaImage {
             image {
               url
-              alt
+              altText
             }
           }
         }
@@ -105,7 +105,7 @@ const CART_FIELDS_FRAGMENT = /* GraphQL */ `
               }
               image {
                 url
-                alt
+                altText
               }
               product {
                 title

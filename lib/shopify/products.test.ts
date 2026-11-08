@@ -22,7 +22,7 @@ describe("mapMoneyValue", () => {
 
 describe("mapCatalogImage", () => {
   it("keeps the url and a provided alt", () => {
-    expect(mapCatalogImage({ url: "https://cdn.example/x.jpg", alt: "A bag" })).toEqual({
+    expect(mapCatalogImage({ url: "https://cdn.example/x.jpg", altText: "A bag" })).toEqual({
       url: "https://cdn.example/x.jpg",
       alt: "A bag",
     });
@@ -51,7 +51,7 @@ describe("mapCatalogVariant", () => {
       price: { amount: 120, currencyCode: "CAD" },
       compareAtPrice: { amount: 140, currencyCode: "CAD" },
       selectedOptions: [{ name: "Color", value: "Olive" }],
-      image: { url: "https://cdn.example/x.jpg", alt: "Olive" },
+      image: { url: "https://cdn.example/x.jpg", altText: "Olive" },
     });
 
     expect(variant).toEqual({

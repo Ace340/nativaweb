@@ -31,7 +31,12 @@ const PRODUCT_REVALIDATE_SECONDS = 60;
 // ── Shopify node shapes (exactly what our queries select) ──────────────────
 
 export type ShopifyMoney = { amount: number; currencyCode: string };
-export type ShopifyImage = { url: string; alt?: string | null };
+/**
+ * Shopify `Image` node shape (Storefront API 2026-10: alt text is
+ * `altText` — introspected against the live schema 2026-11-07; the plain
+ * `alt` field does not exist on the Image type).
+ */
+export type ShopifyImage = { url: string; altText?: string | null };
 export type ShopifySelectedOption = { name: string; value: string };
 
 export type ShopifyVariantNode = {
@@ -76,7 +81,7 @@ export function mapCatalogImage(image: ShopifyImage | null | undefined): Catalog
   if (!image?.url) {
     return null;
   }
-  return { url: image.url, alt: image.alt ?? "" };
+  return { url: image.url, alt: image.altText ?? "" };
 }
 
 /**
